@@ -25,8 +25,9 @@ SECRET_KEY = '&b(-&!#4iqkd10ovm$)85$=@e2iz1)-q=^1(itp(zs#xveo^&r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    "frozen-stream-02844.herokuapp.com"
+]
 
 # Application definition
 
