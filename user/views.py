@@ -23,7 +23,7 @@ class RegisterAPI(generics.GenericAPIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             return Response({
-                "status": "OK",
+                "status": status.HTTP_200_OK,
                 "statusCode": status.HTTP_200_OK,
                 "message": "success",
                 "user_data": {
@@ -35,7 +35,7 @@ class RegisterAPI(generics.GenericAPIView):
             })
         else:
             return Response({
-                "status": "ERROR",
+                "status": status.HTTP_404_NOT_FOUND,
                 "statusCode": status.HTTP_400_BAD_REQUEST,
                 "message": serializer.errors,
             })
@@ -52,7 +52,7 @@ class LoginAPI(KnoxLoginView):
                 user = serializer.validated_data['user']
                 login(request, user)
                 return Response({
-                    "status": "OK",
+                    "status": status.HTTP_200_OK,
                     "statusCode": status.HTTP_200_OK,
                     "message": "success",
                     "user_data": {
@@ -64,14 +64,14 @@ class LoginAPI(KnoxLoginView):
                 })
             else:
                 return Response({
-                    "status": "ERROR",
+                    "status": status.HTTP_404_NOT_FOUND,
                     "statusCode": status.HTTP_400_BAD_REQUEST,
                     "message": serializer.errors,
                 })
 
         except user.DoesNotExist:
             return Response({
-                "status": "ERROR",
+                "status": status.HTTP_404_NOT_FOUND,
                 "statusCode": status.HTTP_404_NOT_FOUND,
                 "message": "User not found",
             })
@@ -87,7 +87,7 @@ class SaveAddressAPI(generics.GenericAPIView):
             if serializer.is_valid(raise_exception=True):
                 address = serializer.save()
                 return Response({
-                    "status": "OK",
+                    "status": status.HTTP_200_OK,
                     "statusCode": status.HTTP_200_OK,
                     "message": "Success",
                 })
@@ -99,7 +99,7 @@ class SaveAddressAPI(generics.GenericAPIView):
                 })
         except:
             return Response({
-                "status": "ERROR",
+                "status": status.HTTP_404_NOT_FOUND,
                 "statusCode": status.HTTP_400_BAD_REQUEST,
                 "message": serializer.errors,
             })
@@ -114,14 +114,14 @@ class GetAddressAPI(generics.GenericAPIView):
             model = Address.objects.filter(user_id=request.POST['user_id'])
             serializer = GetAddressSerializer(model, many=True)
             return Response({
-                "status": "OK",
+                "status": status.HTTP_200_OK,
                 "statusCode": status.HTTP_200_OK,
                 "message": "Success",
                 "address_list": serializer.data
             })
         except Address.DoesNotExist:
             return Response({
-                "status": "ERROR",
+                "status": status.HTTP_404_NOT_FOUND,
                 "statusCode": status.HTTP_404_NOT_FOUND,
                 "message": "User not found",
             })
